@@ -26,7 +26,7 @@ jobs:
         pip install -r requirements.txt
     - name: Lint with flake8
       run: |
-        flake8 pyglidein_server --count --show-source --statistics
+        flake8 scitoken_http_auth --count --show-source --statistics
     - name: Test and Coverage
       if: always() && steps.dependencies.outcome != 'failure'
       run: |

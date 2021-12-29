@@ -4,8 +4,8 @@ Server for scitoken http auth
 
 import logging
 
-from tornado.web import RequestHandler, HTTPError
-from rest_tools.server import RestServer, RestHandler
+from tornado.web import HTTPError
+from rest_tools.server import RestServer, RestHandler, RestHandlerSetup
 from rest_tools.utils import from_environment
 
 from .validate import Validator
@@ -52,13 +52,14 @@ def create_server():
 
     rest_config = {
         'debug': config['DEBUG'],
-        'validator': Validator(issuers=config['ISSUERS'].split(','),
-                               audience=config['AUDIENCE'],
-                               base_path=config['BASE_PATH']),
     }
+    kwargs = RestHandlerSetup(rest_config)
+    kwargs['validator'] = Validator(issuers=config['ISSUERS'].split(','),
+                                    audience=config['AUDIENCE'],
+                                    base_path=config['BASE_PATH'])
 
     server = RestServer(debug=config['DEBUG'])
-    server.add_route(r'/(.*)', Main, rest_config)
+    server.add_route(r'/(.*)', Main, kwargs)
 
     server.startup(address=config['HOST'], port=config['PORT'])
 

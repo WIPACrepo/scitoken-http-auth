@@ -14,6 +14,6 @@ UID and GID are useful for POSIX filesystem access, for example [https://unix.st
 
 Primary configuration is via environment variables:
 
-* ISSUER: the scitoken issuer
+* ISSUERS: the scitoken issuers, comma-separated
 * AUDIENCE: the scitoken audience
 * BASE_PATH: the base path of the server, before any authorized paths in the token
